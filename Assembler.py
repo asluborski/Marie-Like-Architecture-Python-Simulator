@@ -7,8 +7,9 @@ class Assembler:
         parse = Parser()
         parse.parse_labels(op_code)
 
-        PC = 0
+        int_ptr = 0
         for line in op_code:
             commands = line.split(" ")
-            parse.parse_line(commands, PC, address)
-            PC += 1
+            parse.parse_line(commands, int_ptr, address)
+            int_ptr += 1
+

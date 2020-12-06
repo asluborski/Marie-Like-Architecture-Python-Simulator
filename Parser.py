@@ -10,12 +10,12 @@ class Parser:
                          "SUBT": 2,
                          "STORE": 3,
                          "LOAD": 5,
-                         "BALW": 6,
+                         "JUMP": 6,
                          "BIZ": 7,
                          "BIG": 8,
                          "INPUT": 9,
                          "OUTPUT": 9,
-                         "VAR": 4}
+                         "DEC": 4}
         self.labels = dict()
 
     def parse_labels(self, lineNum):
@@ -49,7 +49,7 @@ class Parser:
                 self.fetchNextInstruction(
                     address, self.InstructionSet[op_code], line[1], memptr)
             else:
-                if line[1] == "VAR":
+                if line[1] == "DEC":
                     if len(line) == 2:
                         address[memptr] = 0
                     else:
@@ -58,11 +58,3 @@ class Parser:
                     line.pop(0)
                     self.parse_line(line, memptr, address)
 
-    def assemble(self, command_list, memory):
-        self.parse_labels(command_list)
-
-        instruction_ptr = 0
-        for line in command_list:
-            commands = line.split(" ")
-            self.parse_line(commands, instruction_ptr, memory)
-            instruction_ptr += 1
